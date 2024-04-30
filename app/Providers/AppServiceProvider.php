@@ -2,6 +2,15 @@
 
 namespace App\Providers;
 
+use App\Repositories\Interfaces\PaymentCategoryRepositoryInterface;
+use App\Repositories\Interfaces\PaymentRequestRepositoryInterface;
+use App\Repositories\Interfaces\PaymentStatusRepositoryInterface;
+use App\Repositories\PaymentCategoryRepository;
+use App\Repositories\PaymentRequestRepository;
+use App\Repositories\PaymentStatusRepository;
+use App\Services\PaymentCategoryService;
+use App\Services\PaymentRequestService;
+use App\Services\PaymentStatusService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +20,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(PaymentCategoryRepositoryInterface::class,PaymentCategoryRepository::class);
+        $this->app->bind(PaymentStatusRepositoryInterface::class,PaymentStatusRepository::class);
+        $this->app->bind(PaymentRequestRepositoryInterface::class,PaymentRequestRepository::class);
+
+        $this->app->bind(PaymentCategoryService::class,function ($app) {
+            return new PaymentCategoryService($app->make(PaymentCategoryRepositoryInterface::class));
+        });
+
+        $this->app->bind(PaymentRequestService::class,function ($app) {
+            return new PaymentRequestService($app->make(PaymentRequestRepositoryInterface::class));
+        });
+
+        $this->app->bind(PaymentStatusService::class,function ($app) {
+            return new PaymentStatusService($app->make(PaymentStatusRepositoryInterface::class));
+        });
     }
 
     /**

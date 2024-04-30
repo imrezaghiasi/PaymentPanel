@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\PaymentStatus;
 use App\Models\User;
+use Database\Factories\PaymentStatusFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +20,12 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+        ]);
+
+        $this->call([
+            PaymentCategorySeeder::class,
+            PaymentRequestSeeder::class,
+            PaymentStatusSeeder::class
         ]);
     }
 }
