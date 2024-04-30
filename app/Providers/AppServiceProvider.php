@@ -21,7 +21,6 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(PaymentCategoryRepositoryInterface::class,PaymentCategoryRepository::class);
-        $this->app->bind(PaymentStatusRepositoryInterface::class,PaymentStatusRepository::class);
         $this->app->bind(PaymentRequestRepositoryInterface::class,PaymentRequestRepository::class);
 
         $this->app->bind(PaymentCategoryService::class,function ($app) {
@@ -30,10 +29,6 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(PaymentRequestService::class,function ($app) {
             return new PaymentRequestService($app->make(PaymentRequestRepositoryInterface::class));
-        });
-
-        $this->app->bind(PaymentStatusService::class,function ($app) {
-            return new PaymentStatusService($app->make(PaymentStatusRepositoryInterface::class));
         });
     }
 

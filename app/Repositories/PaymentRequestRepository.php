@@ -27,7 +27,9 @@ class PaymentRequestRepository implements PaymentRequestRepositoryInterface
         return $this->paymentRequest->create([
             'user_id'=> $request->user_id,
             'category_id' => $request->category_id,
-            'description' => $request->description,
+            'request_description' => $request->request_description,
+            'reject_description' => $request->reject_description,
+            'status' => $request->status,
             'amount' => $request->amount,
             'shaba_number' => $request->shaba_number,
             'national_code' => $request->national_code,
@@ -37,7 +39,9 @@ class PaymentRequestRepository implements PaymentRequestRepositoryInterface
     public function update(PaymentRequest $paymentRequest, RequestOfPaymentRequest $request) {
         $paymentRequest->user_id = $request->user_id;
         $paymentRequest->category_id = $request->category_id;
-        $paymentRequest->description = $request->description;
+        $paymentRequest->request_description = $request->request_description;
+        $paymentRequest->reject_description = $request->reject_description;
+        $paymentRequest->status = $request->status;
         $paymentRequest->amount = $request->amount;
         $paymentRequest->shaba_number = $request->shaba_number;
         $paymentRequest->national_code = $request->national_code;

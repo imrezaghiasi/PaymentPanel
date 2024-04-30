@@ -25,7 +25,9 @@ class PaymentRequestFactory extends Factory
         return [
             'user_id' => $this->faker->randomElement($users),
             'category_id' => $this->faker->randomElement($categories),
-            'description' => Faker::paragraph(),
+            'request_description' => Faker::paragraph(),
+            'reject_description' => Faker::paragraph(),
+            'status' => 2,
             'amount' => $this->faker->numberBetween(100000000, 150000000),
             'file_path' => $this->faker->url(),
             'shaba_number' => Faker::mellicode(),

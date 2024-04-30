@@ -25,7 +25,9 @@ class RequestOfPaymentRequest extends FormRequest
         return [
             'user_id' => ['required','exists:users,id'],
             'category_id' => ['required','exists:payment_categories,id'],
-            'description' => ['required'],
+            'request_description' => ['required'],
+            'reject_description' => ['nullable'],
+            'status' => ['required','between:0,2','numeric'],
             'amount' => ['required','numeric'],
             'file_path' => ['nullable','file','mimes:pdf,jpg,png,jpeg','max:2048'],
             'shaba_number' =>['required',Rule::unique('employees')->ignore($this->request->get('id')),'numeric','digits:24'],

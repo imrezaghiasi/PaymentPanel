@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->references('id')->on('payment_categories')->cascadeOnDelete();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->text('description');
-            $table->double('amount');
+            $table->text('request_description');
+            $table->text('reject_description')->nullable();
+            $table->integer('status')->default(2);
+            $table->double('amount')->default(0);
             $table->string('file_path')->nullable();
             $table->string('shaba_number');
             $table->string('national_code',10);

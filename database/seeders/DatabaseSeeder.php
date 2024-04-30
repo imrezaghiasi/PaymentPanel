@@ -2,10 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\PaymentStatus;
 use App\Models\User;
-use Database\Factories\PaymentStatusFactory;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,7 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PaymentCategorySeeder::class,
             PaymentRequestSeeder::class,
-            PaymentStatusSeeder::class
         ]);
     }
 }
