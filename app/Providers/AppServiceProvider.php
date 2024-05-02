@@ -4,13 +4,10 @@ namespace App\Providers;
 
 use App\Repositories\Interfaces\PaymentCategoryRepositoryInterface;
 use App\Repositories\Interfaces\PaymentRequestRepositoryInterface;
-use App\Repositories\Interfaces\PaymentStatusRepositoryInterface;
 use App\Repositories\PaymentCategoryRepository;
 use App\Repositories\PaymentRequestRepository;
-use App\Repositories\PaymentStatusRepository;
 use App\Services\PaymentCategoryService;
 use App\Services\PaymentRequestService;
-use App\Services\PaymentStatusService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

@@ -12,7 +12,7 @@ class RequestOfPaymentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,15 +23,12 @@ class RequestOfPaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required','exists:users,id'],
             'category_id' => ['required','exists:payment_categories,id'],
             'request_description' => ['required'],
-            'reject_description' => ['nullable'],
-            'status' => ['required','between:0,2','numeric'],
             'amount' => ['required','numeric'],
             'file_path' => ['nullable','file','mimes:pdf,jpg,png,jpeg','max:2048'],
-            'shaba_number' =>['required',Rule::unique('employees')->ignore($this->request->get('id')),'numeric','digits:24'],
-            'national_code' =>['required',Rule::unique('employees')->ignore($this->request->get('id')),'numeric','digits:10']
+            'shaba_number' =>['required',Rule::unique('payment_requests','shaba_number')->ignore($this->payment_request),'numeric','digits:24'],
+            'national_code' =>['required',Rule::unique('payment_requests','national_code')->ignore($this->payment_request),'numeric','digits:10']
         ];
     }
 }

@@ -14,6 +14,10 @@ class PaymentRequest extends Model
 
     public function payment_category()
     {
-        return $this->belongsTo(PaymentCategory::class);
+        return $this->belongsTo(PaymentCategory::class,'category_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }
