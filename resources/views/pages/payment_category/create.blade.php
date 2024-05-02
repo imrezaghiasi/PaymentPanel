@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('ایجاد دسته بندی پرداخت') }}
         </h2>
     </x-slot>
 
@@ -20,12 +20,16 @@
         @csrf
         <div class="flex flex-col">
             <div class="mb-4">
-                <label for="name">عنوان شغل</label>
+                <label for="name">عنوان دسته بندی</label>
                 <input
                     type="text"
                     name="name"
+                    value="{{old('name')}}"
                     class="w-full mt-5 px-4 py-2 rounded dark:bg-gray-700 dark:border-gray-800"
                 />
+                @error('name')
+                <div class="text-red-600 mt-1 mb-1">{{ $message }}</div>
+                @enderror
             </div>
         </div>
         <div class="mt-4">

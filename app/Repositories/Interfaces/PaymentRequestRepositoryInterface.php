@@ -12,4 +12,6 @@ interface PaymentRequestRepositoryInterface
     public function store(RequestOfPaymentRequest $request);
     public function update(PaymentRequest $paymentRequest, RequestOfPaymentRequest $request);
     public function delete(PaymentRequest $paymentRequest);
+
+    public function getConfirmed();
 }

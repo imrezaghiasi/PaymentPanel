@@ -18,7 +18,13 @@ class PaymentRequestRepository implements PaymentRequestRepositoryInterface
     }
 
     public function all(Request $request = null) {
-        return $this->paymentRequest->with('user','payment_category')->get();
+        $query = $this->paymentRequest->with('user','payment_category');
+
+        if (!auth()->user()->hasRole('admin')) {
+            $query->where('user_id', auth()->user()->id);
+        }
+
+        return $query->get();
     }
 
     public function delete(PaymentRequest $paymentRequest) {
@@ -54,6 +60,16 @@ class PaymentRequestRepository implements PaymentRequestRepositoryInterface
         $paymentRequest->amount = $request->amount;
         $paymentRequest->shaba_number = $request->shaba_number;
         $paymentRequest->national_code = $request->national_code;
+        if ($request->file('file_path')){
+            $file_name = time() . '_' . $request->file('file_path')->getClientOriginalName();
+            $file_path = $request->file('file_path')->storeAs('payment_requests', $file_name, 'public');
+            $paymentRequest->file_path = $file_path;
+        }
         $paymentRequest->update();
+    }
+
+    public function getConfirmed()
+    {
+        return $this->paymentRequest->select('shaba_number','status','amount')->where('status','1')->get();
     }
 }

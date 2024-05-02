@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CheckShabaNumber;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -27,7 +28,7 @@ class RequestOfPaymentRequest extends FormRequest
             'request_description' => ['required'],
             'amount' => ['required','numeric'],
             'file_path' => ['nullable','file','mimes:pdf,jpg,png,jpeg','max:2048'],
-            'shaba_number' =>['required',Rule::unique('payment_requests','shaba_number')->ignore($this->payment_request),'numeric','digits:24'],
+            'shaba_number' =>['required',new CheckShabaNumber(),Rule::unique('payment_requests','shaba_number')->ignore($this->payment_request),'numeric','digits:24'],
             'national_code' =>['required',Rule::unique('payment_requests','national_code')->ignore($this->payment_request),'numeric','digits:10']
         ];
     }

@@ -4,13 +4,14 @@ namespace App\Services;
 
 use App\Http\Requests\RequestOfPaymentRequest;
 use App\Models\PaymentRequest;
+use App\Repositories\Interfaces\PaymentRequestRepositoryInterface;
 use App\Repositories\PaymentRequestRepository;
 use Illuminate\Http\Request;
 
 class PaymentRequestService
 {
-    protected PaymentRequestRepository $paymentRequestRepository;
-    public function __construct(PaymentRequestRepository $paymentRequestRepository)
+    protected PaymentRequestRepositoryInterface $paymentRequestRepository;
+    public function __construct(PaymentRequestRepositoryInterface $paymentRequestRepository)
     {
         $this->paymentRequestRepository = $paymentRequestRepository;
     }
@@ -29,5 +30,10 @@ class PaymentRequestService
     }
     public function delete(PaymentRequest $paymentRequest){
         return $this->paymentRequestRepository->delete($paymentRequest);
+    }
+
+    public function getConfirmed()
+    {
+        return $this->paymentRequestRepository->getConfirmed();
     }
 }

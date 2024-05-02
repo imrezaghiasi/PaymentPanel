@@ -4,13 +4,14 @@ namespace App\Services;
 
 use App\Http\Requests\PaymentCategoryRequest;
 use App\Models\PaymentCategory;
+use App\Repositories\Interfaces\PaymentCategoryRepositoryInterface;
 use App\Repositories\PaymentCategoryRepository;
 use Illuminate\Http\Request;
 
 class PaymentCategoryService
 {
-    protected PaymentCategoryRepository $paymentCategoryRepository;
-    public function __construct(PaymentCategoryRepository $paymentCategoryRepository)
+    protected PaymentCategoryRepositoryInterface $paymentCategoryRepository;
+    public function __construct(PaymentCategoryRepositoryInterface $paymentCategoryRepository)
     {
         $this->paymentCategoryRepository = $paymentCategoryRepository;
     }

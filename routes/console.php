@@ -9,4 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 
-Schedule::command('app:pay-amount')->dailyAt('10:00');
+Schedule::command('app:pay-amount')->dailyAt('08:00');

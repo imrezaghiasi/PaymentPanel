@@ -7,7 +7,9 @@ use App\Http\Requests\RequestOfPaymentRequest;
 use App\Models\PaymentRequest;
 use App\Services\PaymentCategoryService;
 use App\Services\PaymentRequestService;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PaymentRequestController extends Controller
 {
@@ -23,7 +25,6 @@ class PaymentRequestController extends Controller
     public function index()
     {
         $payment_requests = $this->paymentRequestService->all();
-//        dd($payment_requests);
         return view($this->viewPath . 'index', compact('payment_requests'));
     }
 
@@ -38,6 +39,7 @@ class PaymentRequestController extends Controller
     public function store(RequestOfPaymentRequest $request)
     {
         $this->paymentRequestService->store($request);
+        Alert::success('با موفقیت ایجاد شد');
         return redirect()->route($this->redirectRoute . 'index');
     }
 
@@ -57,6 +59,7 @@ class PaymentRequestController extends Controller
     public function update(RequestOfPaymentRequest $request, PaymentRequest $paymentRequest)
     {
         $this->paymentRequestService->update($paymentRequest, $request);
+        Alert::success('با موفقیت ویرایش شد');
         return redirect()->route($this->redirectRoute . 'index');
     }
 
@@ -64,6 +67,7 @@ class PaymentRequestController extends Controller
     public function destroy(PaymentRequest $paymentRequest)
     {
         $this->paymentRequestService->delete($paymentRequest);
+        Alert::success('با موفقیت حذف شد');
         return redirect()->route($this->redirectRoute . 'index');
     }
 
@@ -71,14 +75,23 @@ class PaymentRequestController extends Controller
     {
         $paymentRequest->status = 1;
         $paymentRequest->update();
+        Alert::success('با موفقیت تایید شد');
         return redirect()->route($this->redirectRoute . 'index');
     }
-    public function reject(PaymentRequest $paymentRequest)
+    public function reject(Request $request,PaymentRequest $paymentRequest)
     {
         $paymentRequest->status = 0;
-        $paymentRequest->reject_description;
+        $paymentRequest->reject_description = $request->reject_description;
         $paymentRequest->update();
         event(new RequestReject($paymentRequest));
+        Alert::success('با موفقیت رد شد');
+        return redirect()->route($this->redirectRoute . 'index');
+    }
+
+    public function pay_amount()
+    {
+        Artisan::call('app:pay-amount');
+        Alert::success('با موفقیت پرداخت شد');
         return redirect()->route($this->redirectRoute . 'index');
     }
 }
